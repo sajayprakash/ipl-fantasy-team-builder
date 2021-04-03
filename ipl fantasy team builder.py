@@ -8,7 +8,7 @@ import pandas as pd # Pandas Library
 import sys
 from time import sleep # Time module
 import random
-import platform #check os 
+import platform #check os  
 
 
 credentialsFile = "credentials.dat" #Stores user details
