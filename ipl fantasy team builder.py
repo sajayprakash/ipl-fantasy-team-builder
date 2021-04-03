@@ -1,4 +1,4 @@
-# PROGRAM WRITTEN BY SAJAY (ME), DO NOT REUSE FOR YOUR PROJECT, COME UP WITH YOUR OWN IDEA, CAN USE MY PROJECT FOR INSPIRATION.
+# PROGRAM WRITTEN BY SAJAY (ME), DO NOT REUSE FOR YOUR PROJECT.
 
 from getpass import getpass #Getpass Module
 import pyfiglet #used to create ascii text art
@@ -8,12 +8,21 @@ import pandas as pd # Pandas Library
 import sys
 from time import sleep # Time module
 import random
+import platform #check os 
 
 
 credentialsFile = "credentials.dat" #Stores user details
 dbFile = "playerDb.csv" #CSV file with all player info
 newUserMoney = 40  # Starting Users money
 globalUserDetails = list
+
+def clearscreen():
+    if platform.system() == "Windows":
+        os.system('cls')
+    elif platform.system()== "Linux" or "Mac":
+        os.system("clear")
+
+
 
 def printcooltext(text):
     cooltext= pyfiglet.figlet_format(text, font='doom')
@@ -39,6 +48,7 @@ def createNewUser():
         f.flush()
     global globalUserDetails
     globalUserDetails = [username, password, newUserMoney]
+
 
 
 def login():
@@ -70,18 +80,16 @@ def login():
     globalUserDetails = [username, password, moneyLeft]
     return True
 
-# PROGRAM WRITTEN BY SAJAY (ME), DO NOT REUSE FOR YOUR PROJECT, COME UP WITH YOUR OWN IDEA, CAN USE MY PROJECT FOR INSPIRATION.
 
 def showByPriceRange(minValue, maxValue):
-    os.system('cls') # cls is used to clear screen
+    clearscreen() # cls is used to clear screen
     playerDb = pd.read_csv(dbFile)
     playerDb['Price'] = playerDb['Price'].astype(float)
     print(playerDb[(playerDb.Price >= minValue) & (playerDb.Price <= maxValue)])
-    
 
 
 def addToUserTeam(playerNumber):
-    os.system('cls')
+    clearscreen()
     playerDb = pd.read_csv(dbFile)
     playerName = ""
     # Reference - https://stackoverflow.com/questions/39482722/how-to-print-dataframe-on-single-line
@@ -124,10 +132,10 @@ def addToUserTeam(playerNumber):
     
     print(playerName + " added to team" )
       
-# PROGRAM WRITTEN BY SAJAY (ME), DO NOT REUSE FOR YOUR PROJECT, COME UP WITH YOUR OWN IDEA, CAN USE MY PROJECT FOR INSPIRATION.
+
 
 def showUserTeam():
-    os.system('cls')
+    clearscreen()
     print("Username: ", globalUserDetails[0])
     print("Balance: ", globalUserDetails[2])
     with open(globalUserDetails[0] + ".txt", 'r') as f:
@@ -135,11 +143,8 @@ def showUserTeam():
         for line in lines:
             print(line)
         f.close()
-        
-
-
 def showUserTeam2():
-    os.system('cls')
+    clearscreen()
     print("Username: ", globalUserDetails[0])
     print("Choose your player:\n")
     with open(globalUserDetails[0] + ".txt", 'r') as f:
@@ -147,7 +152,7 @@ def showUserTeam2():
         for line in lines:
             print(line)
         f.close()
-        
+
 
 def Handcricket():
     score=0
@@ -165,22 +170,22 @@ def Handcricket():
     userselect= input("Choose heads or tails:\n")
     random1= random.choice(['heads','tails'])
     if userselect== random1:
-        os.system('cls')
+        clearscreen()
         print("You won the toss!")
         sleep(2)
-        os.system('cls')
+        clearscreen()
         tosschoice=input("Choose to bat or bowl?\n")
     else:
         print("You lost the toss :(")
         sleep(2)
         random2 = random.choice(['bat', 'bowl'])
-        os.system('cls')
+        clearscreen()
         print("Opponent chose to "+ random2)
         sleep(2)
     showUserTeam2()
 
     userinput=input("Enter Player Name:\n")
-    os.system('cls')
+    clearscreen()
     if tosschoice=="bat"or random2 == "bowl":
         print("Current Batsman:", userinput)
         while status1==0:
@@ -188,14 +193,14 @@ def Handcricket():
             randomchoice = random.randint(1, 10)
             print("CPU:", randomchoice)
             if userchoice>10:
-                os.system('cls')
+                clearscreen()
                 print("Current Score:", score)
                 print("Haha, don't try to cheat\n")
                 score-=userchoice
                 cheatcount+=1
                 if cheatcount==3:
                     actualbal-=5
-                    os.system('cls')
+                    clearscreen()
                     sleep(2)
                     print("WOW! Why do you want to cheat so bad?\n")
                     sleep(2)
@@ -229,7 +234,7 @@ def Handcricket():
                 if userchoice == randomchoice:
                     print("You got a wicket!")
                     sleep(2)
-                    os.system('cls')
+                    clearscreen()
                     if ballcount==1:
                         target=1
                         print("You won, good job!\n")
@@ -265,7 +270,7 @@ def Handcricket():
                 if userchoice == randomchoice:
                     print("You got a wicket!")
                     sleep(2)
-                    os.system('cls')
+                    clearscreen()
                     if ballcount==1:
                         target=1
                     status2=0
@@ -282,14 +287,14 @@ def Handcricket():
             randomchoice = random.randint(1, 10)
             print("CPU:", randomchoice)
             if userchoice > 10:
-                os.system('cls')
+                clearscreen()
                 print("Current Score:", score)
                 print("Haha, don't try to cheat\n")
                 score-=userchoice
                 cheatcount += 1
                 if cheatcount == 3:
                     actualbal -= 5
-                    os.system('cls')
+                    clearscreen()
                     sleep(2)
                     print("WOW! Why do you want to cheat so bad?\n")
                     sleep(2)
@@ -320,24 +325,20 @@ def Handcricket():
                     score = 1
                 sleep(2)
                 print("You scored:", score)
-                
-# PROGRAM WRITTEN BY SAJAY (ME), DO NOT REUSE FOR YOUR PROJECT, COME UP WITH YOUR OWN IDEA, CAN USE MY PROJECT FOR INSPIRATION.
 
 def showBowlers():
     playerDb = pd.read_csv(dbFile)
     print(playerDb.loc[playerDb['Role'] == "Bowler"])
-  
+
 
 def showBatsmen():
     playerDb = pd.read_csv(dbFile)
     print(playerDb.loc[playerDb['Role'] == "Batsman"])
 
 
-
 def showAllRounders():
     playerDb = pd.read_csv(dbFile)
     print(playerDb.loc[playerDb['Role'] == "All-Rounder"])
-    
 
 
 def showWicketKeepers():
@@ -345,12 +346,10 @@ def showWicketKeepers():
     print(playerDb.loc[playerDb['Role'] == "Wicket Keeper"])
 
 
-
 def showAllPlayers():
     playerDb = pd.read_csv(dbFile)
     print(playerDb)
-    
-# PROGRAM WRITTEN BY SAJAY (ME), DO NOT REUSE FOR YOUR PROJECT, COME UP WITH YOUR OWN IDEA, CAN USE MY PROJECT FOR INSPIRATION.
+
 
 def selectPlayer():
     playerNumber = int(input("Enter player number:\n"))
@@ -359,7 +358,7 @@ def selectPlayer():
 
 # After menu1 you get sent to menu2
 def menu2():
-    os.system('cls')
+    clearscreen()
     option = int(input("Options\n1: Sort by value\n2: Sort by role\n3: Show all players\n4: Exit\n"))
     if option == 1:
         minVal = float(input("Enter min val( 0.1-17 cr):\n"))
@@ -397,7 +396,7 @@ def menu2():
 
 # After main menu you get sent to menu1
 def menu1():
-    os.system('cls')
+    clearscreen()
     option = int(input("Options\n1: Add to team\n2: View team\n3: Play a game\n4: Exit\n"))
     if option == 1:
         menu2()
@@ -419,7 +418,7 @@ def menu1():
 
 # This is the starting Menu
 def mainMenu():
-    os.system('cls')
+    clearscreen()
     option = int(input("Options:\n1: Login\n2: Create New Account\n3: Exit\n"))
     if option == 1:
         if login() == False:
@@ -441,7 +440,7 @@ def mainMenu():
             input()
             mainMenu()
     elif option == 3:
-        os.system('cls')
+        clearscreen()
         sys.exit()
     else:
         print("Invalid entry, try again")
@@ -450,6 +449,7 @@ def mainMenu():
 
 
 if __name__ == "__main__":
+    clearscreen()
     pd.set_option('display.max_rows', None)
     # Reference - https://stackoverflow.com/questions/39482722/how-to-print-dataframe-on-single-line
     pd.set_option('expand_frame_repr', False)
@@ -457,11 +457,12 @@ if __name__ == "__main__":
     # Create file if it does not exist
     with open(credentialsFile, 'ab+') as fp:
         pass
-    os.system('cls')
+    clearscreen()
     printcooltext("Welcome To IPL Fantasy Team Builder !")
     sleep(4)
-    os.system('cls')
+    clearscreen()
     mainMenu()
 
-# PROGRAM WRITTEN BY SAJAY (ME), DO NOT REUSE FOR YOUR PROJECT, COME UP WITH YOUR OWN IDEA, CAN USE MY PROJECT FOR INSPIRATION.
+
+# PROGRAM WRITTEN BY SAJAY (ME), DO NOT REUSE FOR YOUR PROJECT.
 
