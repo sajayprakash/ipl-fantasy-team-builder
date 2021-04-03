@@ -16,7 +16,8 @@ dbFile = "playerDb.csv" #CSV file with all player info
 newUserMoney = 40  # Starting Users money
 globalUserDetails = list
 
-def clearscreen():
+# checks os for proper terminal command
+def clearscreen(): 
     if platform.system() == "Windows":
         os.system('cls')
     elif platform.system()== "Linux" or "Mac":
